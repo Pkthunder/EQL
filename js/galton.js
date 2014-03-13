@@ -19,6 +19,7 @@
 //Change the residual balls to diagonals (joints at the pegs and above the pegs)
 
 $(document).ready( function() {
+	Kinetic.pixelRatio = 1;
 	$("#start").removeAttr("disabled");
 	$("#pause").attr('disabled', 'true');
 	$("#modal-pause").removeAttr("disabled");
