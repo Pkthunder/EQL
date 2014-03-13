@@ -576,8 +576,10 @@ $(document).ready( function() {
 		execSpeed = (data.value) ? 250 : 0.000001;
 		//console.log('ExecSpeed:'+execSpeed);
 		//console.log('data:'+data.value);
-		$("#pause").trigger('click');
-		$("#start").trigger('click');
+		if ( simId != undefined ) {
+			$("#pause").trigger('click');
+			$("#start").trigger('click');
+		}
 	});
 
 }); // End of jQuery doc.ready()
