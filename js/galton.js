@@ -23,7 +23,6 @@ $(document).ready( function() {
 	$("#start").removeAttr("disabled");
 	$("#pause").attr('disabled', 'true');
 	$("#modal-pause").removeAttr("disabled");
-	//window.parent.document.body.style.zoom = 1.0;
 	$("[name='speedSwitch']").bootstrapSwitch();
 	$("#speed-switch").bootstrapSwitch('state', true);
 
@@ -324,23 +323,7 @@ $(document).ready( function() {
 	stage.add(marble_layer);
 	stage.add(text_layer);
 
-					// **Bug Fix** \\
-	// $('div.kineticjs-content canvas').each( function() {
-	// 	var h = $(this).css('height');
-	//var w = $(this).css('width');
-	// 	$(this).attr('height', parseFloat(h)+2);
-	// 	$(this).attr('width', parseFloat(w)+2);
-	// });
-	// var w = $('div.kineticjs-content canvas').css('width');
-	// peg_layer.width(parseFloat(w));
-	// peg_layer.draw();
-	// tooltip_layer.draw();
-	// marble_layer.draw();
-	// odometer_layer.draw();
-	// text_layer.draw();
-	// bin_layer.draw();
-	// residual_layer.draw();
-	//stage.draw();
+/********************************************************** Simulation Code ***************************************************/
 
 	var simId;
 	var runSimulation = function() {
@@ -548,99 +531,16 @@ $(document).ready( function() {
     	tooltip_status = (!tooltip_status) ? true : false;
     }
 
-/********************************************************** Conway Animations *********************************************************/
-	
-	var conwayText;
-	function runConwayAnimation() {
-		console.log('Conway Simulation Running...');
-
-		var container = $("#conway-animation");
-		var animation = new Kinetic.Stage({
-			container: 'conway-animation',
-			width: container.width(),
-			height: container.height()
-		});
-
-		var conway_text_layer = new Kinetic.Layer();
-		var conway_layer = new Kinetic.Layer();
-		animation.add(conway_layer);
-		animation.add(conway_text_layer);
-
-		//bar graph setup
-		var conway_dist = [ 2, 1, 2, 1, 0, 2, 1, 1, 1, 1, 1 ];
-		var bar_array = new Array();
-		bar_array[0] = new Kinetic.Rect({
-			x: 10,
-			y: 405,
-			width: 30,
-			height: -300,
-			fill: 'blue',
-			stroke: 'black',
-			strokeWidth: 1
-		});
-		conway_layer.add(bar_array[0]);
-		var xInterval = 105;
-		for ( var i=1; i<11; i++ ) {
-			bar_array[i] = bar_array[0].clone({
-				x: xInterval,
-				height: (-150) * conway_dist[i]
-			});
-			xInterval = xInterval + 95;
-			conway_layer.add(bar_array[i]);
-		}
-		conway_layer.draw();
-
-		//text setup
-		// var john_array = [ 'J', 'o', 'h', 'n', ' ', 'C', 'o', 'n', 'w', 'a', 'y' ];
-		// var text_array = new Array();
-		// text_array[0] = new Kinetic.Text({
-		// 	text: 'J',
-		// 	x: 5,
-		// 	y: 125,
-		// 	fontSize: 200,
-		// 	fill: 'yellow',
-		// 	stroke: 'black',
-		// 	strokeWidth: 3
-		// });
-		// conway_text_layer.add(text_array[0]);
-		// var text_xInterval = 85;
-		// for ( var j=1; j<11; j++ ) {
-		// 	text_array[j] = text_array[0].clone({
-		// 		text: john_array[j],
-		// 		x: text_xInterval
-		// 	});
-		// 	text_xInterval = text_xInterval + 80;
-		// 	conway_text_layer.add(text_array[j]);
-		// }
-		// conway_text_layer.draw();
-
-		var text = new Kinetic.Text({
-			text: 'John Conway',
-			x: 5,
-			y: 215,
-			fontSize: 195,
-			fill: 'yellow',
-			stroke: 'black',
-			strokeWidth: 3,
-			visible: false
-		});
-		conway_text_layer.add(text);
-		conway_text_layer.draw();
-
-		console.log("Conway Simulation Ended...");
-
-		return text;
-	}
-
 /******************************************************* Button and UI Functions ******************************************************/
-	$('#start').on('click', function() {
+	
+	$('#start').on('click', function() { //Start Simulation
 		console.log('***Simulation Initiated***');
 		simId = setInterval(runSimulation, (execSpeed/4)+execSpeed);
 		$("#pause").removeAttr("disabled");
 		$(this).attr('disabled', 'true');
 	});
 
-	$('#pause').on('click', function() {
+	$('#pause').on('click', function() { //Pause...
 		console.log('***Simulation Paused***');
 		clearInterval(simId);
 		simId = undefined;
@@ -648,33 +548,30 @@ $(document).ready( function() {
 		$(this).attr('disabled', 'true');
 	});
 
-	$("#reset_btn").on("click", function() {
+	$("#reset_btn").on("click", function() { //Reset
         $(this).unbind("click");
         $("#start").removeAttr("disabled");
 		$("#pause").attr('disabled', 'true');
         window.location.reload();
     });
 
-    $("#tooltip_btn").on("click", function() {
+    $("#tooltip_btn").on("click", function() { //View Probabilities
     	toggleAllTooltips();
     });
 
-    $("#resline_toggle").on("click", function() {
+    $("#resline_toggle").on("click", function() { //Currently Commented Out - Testing: Residual Lines
     	resline_bool = !(resline_bool);
     });
 
-    $("#conwayBtn").on("click", function() {
-    	//console.log('onClick triggered');
-		conwayText = runConwayAnimation();
+    $("#conwayBtn").on("click", function() { //Target Distribution
+    	$("#conway-animation").css('background-image', 'url("../static/img/Bars.jpg")');
     });
 
-    $("#runConway").on("click", function() {
-    	console.log('onClick triggered');
-    	conwayText.show();
-    	conwayText.draw();
+    $("#runConway").on("click", function() { //Overlay
+    	$("#conway-animation").css('background-image', 'url("../static/img/orange_letters.jpg")');
     })
 
-   $('#speed-switch').on('switchChange', function (e, data) {
+   $('#speed-switch').on('switchChange', function (e, data) { //Speed Switch
 		console.log('Speed Changed!');
 		execSpeed = (data.value) ? 250 : 0.000001;
 		//console.log('ExecSpeed:'+execSpeed);
