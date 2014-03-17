@@ -475,33 +475,37 @@ $(document).ready( function() {
 					peg.ratio = probArray[count];
 	    			count++;
 	    			peg.shape.on('mouseenter', function(e) {
-	    				if ( !peg.tooltipCreated ) {
-		    				peg.tooltip.add(new Kinetic.Tag( {
-		    						fill: 'black',
-		    						pointerDirection: 'up',
-		    						pointerWidth: 10,
-		    						pointerHeight: 4,
-		    						lineJoin: 'round',
-		    						cornerRadius: 50
-		    				}));
-		    				peg.tooltip.add(new Kinetic.Text( {
-		    						text: peg.ratio,
-		    						fontFamily: 'Arial',
-		    						fontSize: 22,
-		    						padding: 5,
-		    						fill: 'white',
-		    						cornerRadius: 50
-		    				}));
-		    				peg.tooltipCreated = true;
-    					}
-    					else if ( peg.tooltipCreated ) {
-    						peg.tooltip.show();
-    					}
-	    				tooltip_layer.draw();
+	    				if (tooltip_active) { //only triggers programmatically
+		    				if ( !peg.tooltipCreated ) {
+			    				peg.tooltip.add(new Kinetic.Tag( {
+			    						fill: 'black',
+			    						pointerDirection: 'up',
+			    						pointerWidth: 10,
+			    						pointerHeight: 4,
+			    						lineJoin: 'round',
+			    						cornerRadius: 50
+			    				}));
+			    				peg.tooltip.add(new Kinetic.Text( {
+			    						text: peg.ratio,
+			    						fontFamily: 'Arial',
+			    						fontSize: 22,
+			    						padding: 5,
+			    						fill: 'white',
+			    						cornerRadius: 50
+			    				}));
+			    				peg.tooltipCreated = true;
+	    					}
+	    					else if ( peg.tooltipCreated ) {
+	    						peg.tooltip.show();
+	    					}
+		    				tooltip_layer.draw();
+		    			}
 	    			});
 	    			peg.shape.on('mouseleave', function(e) {
-	    				peg.tooltip.hide();
-	    				tooltip_layer.draw();
+	    				if (tooltip_active) { //only triggers programmatically
+	    					peg.tooltip.hide();
+	    					tooltip_layer.draw();
+	    				}
 	    			});
     			}
     		});
@@ -509,7 +513,10 @@ $(document).ready( function() {
     }
 
     var tooltip_status = false; //false = off (or individual), true = on
+    var tooltip_active = false; //a boolean to prevent mouseover events from trigger non-programmatically
     function toggleAllTooltips() {
+    	tooltip_active = true; //only set to true during programmatic triggering of events
+
     	$.each(pegList, function( index1, arr ) {
     		$.each(arr, function( index2, peg ) {
 
@@ -529,6 +536,7 @@ $(document).ready( function() {
 
     		});
     	});
+    	tooltip_active = false; //set back to false to prevent non-programmatic event triggers
     	tooltip_status = (!tooltip_status) ? true : false;
     }
 
