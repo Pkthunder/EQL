@@ -452,7 +452,8 @@ $(document).ready( function() {
     					},
     					crop: false,
     					overflow: 'none'
-    				}
+    				},
+    				pointWidth: 110
     			}
     		},
     		series: [{
