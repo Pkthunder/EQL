@@ -478,7 +478,7 @@ $(document).ready( function() {
 	    				if (tooltip_active) { //only triggers programmatically
 		    				if ( !peg.tooltipCreated ) {
 			    				peg.tooltip.add(new Kinetic.Tag( {
-			    						fill: 'black',
+			    						fill: 'white',
 			    						pointerDirection: 'up',
 			    						pointerWidth: 10,
 			    						pointerHeight: 4,
@@ -490,7 +490,7 @@ $(document).ready( function() {
 			    						fontFamily: 'Arial',
 			    						fontSize: 22,
 			    						padding: 5,
-			    						fill: 'white',
+			    						fill: 'black',
 			    						cornerRadius: 50
 			    				}));
 			    				peg.tooltipCreated = true;
