@@ -478,7 +478,7 @@ $(document).ready( function() {
 	    				if (tooltip_active) { //only triggers programmatically
 		    				if ( !peg.tooltipCreated ) {
 			    				peg.tooltip.add(new Kinetic.Tag( {
-			    						fill: 'white',
+			    						fill: '#F5F5F5',
 			    						pointerDirection: 'up',
 			    						pointerWidth: 10,
 			    						pointerHeight: 4,
@@ -486,7 +486,7 @@ $(document).ready( function() {
 			    						cornerRadius: 50
 			    				}));
 			    				peg.tooltip.add(new Kinetic.Text( {
-			    						text: peg.ratio,
+			    						text: peg.ratio.toFixed(1),
 			    						fontFamily: 'Arial',
 			    						fontSize: 22,
 			    						padding: 5,
@@ -577,8 +577,14 @@ $(document).ready( function() {
     });
 
     $("#runConway").on("click", function() { //Overlay
-    	$("#conway-animation").css('background-image', 'url("../static/img/orange_letters.jpg")');
-    })
+    	var imgStr = $("#conway-animation").css('background-image');
+    	if ( imgStr.contains('Words.jpg') ) {
+    		$("#conway-animation").css('background-image', 'url("../static/img/Bars_Words.jpg")');
+    	}
+    	else {
+    		$("#conway-animation").css('background-image', 'url("../static/img/Words.jpg")');
+    	}
+    });
 
    $('#speed-switch').on('switchChange', function (e, data) { //Speed Switch
 		console.log('Speed Changed!');
