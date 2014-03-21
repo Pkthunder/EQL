@@ -488,7 +488,7 @@ $(document).ready( function() {
 			    				peg.tooltip.add(new Kinetic.Text( {
 			    						text: peg.ratio.toFixed(1),
 			    						fontFamily: 'Arial',
-			    						fontSize: 22,
+			    						fontSize: 42,
 			    						padding: 5,
 			    						fill: 'black',
 			    						cornerRadius: 50
