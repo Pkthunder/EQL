@@ -259,7 +259,7 @@ $(document).ready( function() {
 			that.shape.setAttr('x', first_pos_x);
 			that.shape.setAttr('y', first_pos_y);
 			marble_layer.draw();
-			currResLine.addPoint(first_pos_x, first_pos_y); //Evana - leave
+			currResLine.addPoint(first_pos_x, first_pos_y);
 			//console.log('First Position Reached');
 		}, (execSpeed/4)*1 );
 
@@ -269,7 +269,7 @@ $(document).ready( function() {
 			that.shape.setAttr('x', second_pos_x);
 			that.shape.setAttr('y', second_pos_y);
 			marble_layer.draw();
-			//currResLine.addPoint(second_pos_x, second_pos_y); //Evana - comment out
+			//currResLine.addPoint(second_pos_x, second_pos_y);
 			//console.log('Second Position Reached');
 		}, (execSpeed/4)*2 );
 
@@ -279,7 +279,7 @@ $(document).ready( function() {
 			that.shape.setAttr('x', third_pos_x);
 			that.shape.setAttr('y', third_pos_y);
 			marble_layer.draw();
-			//currResLine.addPoint(third_pos_x, third_pos_y); //Evana - comment out
+			//currResLine.addPoint(third_pos_x, third_pos_y);
 			//console.log('Third Position Reached');
 		}, (execSpeed/4)*3 );
 
@@ -289,7 +289,7 @@ $(document).ready( function() {
 			that.shape.setAttr('x', fourth_pos_x);
 			that.shape.setAttr('y', fourth_pos_y);
 			marble_layer.draw();
-			currResLine.addPoint(fourth_pos_x, fourth_pos_y); //Evana - comment out for straight lines, leave for jagged
+			currResLine.addPoint(fourth_pos_x, fourth_pos_y);
 			//console.log('Fourth Position Reached');
 		}, (execSpeed/4)*4 );
 
@@ -343,6 +343,7 @@ $(document).ready( function() {
 				lastPeg.odometer++;
 				lastPeg.odoMarble = currMar.shape.clone();
 				lastPeg.odoMarble.moveTo(odometer_layer);
+				lastPeg.odoMarble.hide() //For Evana: Galton = Comment, Galton2 = UNcomment
 				lastPeg.odoMarble.move(0, 20);
 				lastPeg.odoText = new Kinetic.Text({
 								x: lastPeg.x-5,
@@ -448,7 +449,7 @@ $(document).ready( function() {
     					enabled: true,
     					color: 'black',
     					style: {
-    						fontSize: '40px' //Evana - for numbers above the bars
+    						fontSize: '40px'
     					},
     					crop: false,
     					overflow: 'none'
@@ -578,7 +579,8 @@ $(document).ready( function() {
 
     $("#runConway").on("click", function() { //Overlay
     	var imgStr = $("#conway-animation").css('background-image');
-    	if ( imgStr.contains('Words.jpg') ) {
+    	imgStr = imgStr.toString();
+    	if ( imgStr.match(/Words/) != null ) {
     		$("#conway-animation").css('background-image', 'url("../static/img/Bars_Words.jpg")');
     	}
     	else {
