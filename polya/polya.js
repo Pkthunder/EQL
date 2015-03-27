@@ -1,4 +1,5 @@
 $(document).ready( function() {
+	Kinetic.pixelRatio = 1;
 
 	var shape_list = new Array();
 
